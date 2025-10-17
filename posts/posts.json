@@ -1,0 +1,13 @@
+{
+  "posts": [
+    {
+      "slug": "welcome-to-neon-hack-logs",
+      "title": "Welcome to Hrishikesh's Security Logs",
+      "description": "Why this blog exists, what to expect, and how to navigate.",
+      "date": "2025-10-17",
+      "tags": ["intro", "meta"]
+    }
+  ]
+}
+
+
