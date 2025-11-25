@@ -1,0 +1,196 @@
+{
+  "main": {
+    "id": "563153ee7e552263",
+    "type": "split",
+    "children": [
+      {
+        "id": "ce68dd50b719f0ac",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a79aa23075bae3ea",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "blg1-24-11-2025-graphql-bug-bounty.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "blg1-24-11-2025-graphql-bug-bounty"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "29eef8b90f06f2c8",
+    "type": "split",
+    "children": [
+      {
+        "id": "9d445c90dc1219af",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "572e742ff0b69d8f",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "348825ddbfec2f38",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "d20858e9660aa466",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "4fb047963cff43cc",
+    "type": "split",
+    "children": [
+      {
+        "id": "ab92410e6b14b904",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c8e351f77c9afc25",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "blg1-24-11-2025-graphql-bug-bounty.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for blg1-24-11-2025-graphql-bug-bounty"
+            }
+          },
+          {
+            "id": "1325584fa62da925",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "blg1-24-11-2025-graphql-bug-bounty.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from blg1-24-11-2025-graphql-bug-bounty"
+            }
+          },
+          {
+            "id": "067472f95ab20a17",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "1e1781c84b4a0e64",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "857bd74ca5a75fb4",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "blg1-24-11-2025-graphql-bug-bounty.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of blg1-24-11-2025-graphql-bug-bounty"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "a79aa23075bae3ea",
+  "lastOpenFiles": [
+    "blg1-24-11-2025-graphql-bug-bounty/cover.jpg",
+    "blg1-24-11-2025-graphql-bug-bounty/cover (1).jpeg",
+    "blg1-24-11-2025-graphql-bug-bounty/cover.jpeg",
+    "blg1-24-11-2025-graphql-bug-bounty",
+    "f",
+    "welcome-to-neon-hack-logs.md",
+    "blg1-24-11-2025-graphql-bug-bounty.md"
+  ]
+}

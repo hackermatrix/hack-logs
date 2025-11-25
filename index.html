@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#00f0ff" />
+    <meta name="theme-color" content="#0f1117" />
     <title>Hrishikesh’s Security Logs — Hrishikesh Jadhav</title>
     <meta name="description" content="Cybersecurity, CTF writeups, exploit dev, and blue team notes." />
     <meta name="author" content="Hrishikesh Jadhav" />
@@ -14,28 +14,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
 
     <!-- Prism (code highlight) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" />
 
     <!-- Styles -->
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div class="background">
-      <div class="scanline"></div>
-      <div class="grid"></div>
-    </div>
+    <div class="background"></div>
 
     <header class="site-header">
       <div class="branding">
         <div class="logo">⚡</div>
         <div class="title">
-          <h1>Hrishikesh’s Security Logs</h1>
-          <p>Notes from the perimeter — red, blue, and everything between.</p>
-          <p>by <strong>Hrishikesh P. Jadhav</strong></p>
+          <h1>Hrishikesh's Security Logs</h1>
         </div>
       </div>
       <div class="actions">
-        <input id="searchInput" class="search" type="search" placeholder="Search posts, CVEs, tags..." aria-label="Search posts" />
+        <input id="searchInput" class="search" type="search" placeholder="Search..." aria-label="Search posts" />
         <button id="themeToggle" class="btn btn-ghost" title="Toggle theme" aria-pressed="false">🌓</button>
         <button id="randomBtn" class="btn btn-ghost" title="Random post">🎲</button>
         <a class="btn btn-primary" href="#" title="Home">Home</a>
@@ -48,6 +43,10 @@
 
     <main class="container">
       <section id="homeView" class="view">
+        <div id="loadingIndicator" class="loading-indicator" aria-hidden="true">
+          <div class="loading-spinner"></div>
+          <p>Loading posts...</p>
+        </div>
         <div id="postList" class="post-grid" aria-live="polite"></div>
       </section>
 
@@ -69,13 +68,15 @@
       </section>
     </main>
 
+    <button id="scrollToTop" class="scroll-to-top" aria-label="Scroll to top" title="Scroll to top">↑</button>
+
     <footer class="site-footer">
       <div>
         <span>© 2025 <strong>Hrishikesh P. Jadhav</strong> </span>
         
       </div>
       <div>
-        <a href="#" title="Back to top">↑ Top</a>
+        <a href="#" class="back-to-top-link" title="Back to top">↑ Top</a>
       </div>
     </footer>
 

@@ -24,44 +24,58 @@ const elements = {
   randomBtn: document.getElementById("randomBtn"),
   toc: document.getElementById("toc"),
   themeToggle: document.getElementById("themeToggle"),
+  loadingIndicator: document.getElementById("loadingIndicator"),
+  scrollToTop: document.getElementById("scrollToTop"),
 };
 
 function getPreferredTheme() {
   const saved = localStorage.getItem("nhl-theme");
-  if (saved === "terminal" || saved === "neon") return saved;
-  // default by system preference is neon; could switch based on prefers-color-scheme if needed
-  return "neon";
+  if (saved === "light" || saved === "dark") return saved;
+  // Default to dark, but could check system preference
+  const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  return prefersDark ? "dark" : "light";
 }
 
 function applyTheme(theme) {
   state.theme = theme;
   const root = document.documentElement;
-  if (theme === "terminal") {
-    root.setAttribute("data-theme", "terminal");
+  if (theme === "light") {
+    root.setAttribute("data-theme", "light");
   } else {
     root.removeAttribute("data-theme");
   }
   localStorage.setItem("nhl-theme", theme);
   if (elements.themeToggle) {
-    elements.themeToggle.setAttribute("aria-pressed", theme === "terminal" ? "true" : "false");
-    elements.themeToggle.textContent = theme === "terminal" ? "🖥️" : "🌓";
-    elements.themeToggle.title = theme === "terminal" ? "Switch to Neon" : "Switch to Terminal";
+    elements.themeToggle.setAttribute("aria-pressed", theme === "light" ? "true" : "false");
+    elements.themeToggle.textContent = theme === "light" ? "🌙" : "☀️";
+    elements.themeToggle.title = theme === "light" ? "Switch to Dark" : "Switch to Light";
   }
 }
 
 function toggleTheme() {
-  applyTheme(state.theme === "terminal" ? "neon" : "terminal");
+  applyTheme(state.theme === "light" ? "dark" : "light");
 }
 
 async function loadManifest() {
-  const res = await fetch("./posts/posts.json");
-  if (!res.ok) throw new Error("Failed to load posts.json");
-  const manifest = await res.json();
-  state.posts = manifest.posts
-    .map(p => ({ ...p, date: new Date(p.date) }))
-    .sort((a, b) => b.date - a.date);
-  for (const p of state.posts) {
-    if (Array.isArray(p.tags)) p.tags.forEach(t => state.tags.add(t));
+  if (elements.loadingIndicator) {
+    elements.loadingIndicator.setAttribute("aria-hidden", "false");
+    elements.loadingIndicator.style.display = "flex";
+  }
+  try {
+    const res = await fetch("./posts/posts.json");
+    if (!res.ok) throw new Error("Failed to load posts.json");
+    const manifest = await res.json();
+    state.posts = manifest.posts
+      .map(p => ({ ...p, date: new Date(p.date) }))
+      .sort((a, b) => b.date - a.date);
+    for (const p of state.posts) {
+      if (Array.isArray(p.tags)) p.tags.forEach(t => state.tags.add(t));
+    }
+  } finally {
+    if (elements.loadingIndicator) {
+      elements.loadingIndicator.setAttribute("aria-hidden", "true");
+      elements.loadingIndicator.style.display = "none";
+    }
   }
 }
 
@@ -102,9 +116,14 @@ function normalizeString(value) {
   return (value || "").toLowerCase().trim();
 }
 
+// Debounce function for search
+let searchTimeout = null;
 function updateSearch(query) {
-  state.searchQuery = normalizeString(query);
-  renderList();
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => {
+    state.searchQuery = normalizeString(query);
+    renderList();
+  }, 150);
 }
 
 function matchesFilters(post) {
@@ -115,27 +134,62 @@ function matchesFilters(post) {
   return matchesQuery && matchesTag;
 }
 
+function formatDate(date) {
+  return new Intl.DateTimeFormat('en-US', { 
+    year: 'numeric', 
+    month: 'short', 
+    day: 'numeric' 
+  }).format(date);
+}
+
 function renderList() {
   const filtered = state.posts.filter(matchesFilters);
   if (filtered.length === 0) {
     const q = state.searchQuery;
-    elements.postList.innerHTML = `<div class="card"><h3>No results</h3><p>${q ? `Nothing found for \"${escapeHtml(q)}\"` : "Try another keyword or clear filters."}</p></div>`;
+    const hasFilters = q || state.filteredTag;
+    elements.postList.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <h3>No results found</h3>
+        <p>${hasFilters ? `Nothing matches your ${q ? `search "${escapeHtml(q)}"` : ""}${q && state.filteredTag ? " and " : ""}${state.filteredTag ? `tag "${escapeHtml(state.filteredTag)}"` : ""}.` : "Try another keyword or clear filters."}</p>
+        ${hasFilters ? `<button class="btn btn-primary clear-filters" onclick="clearFilters()">Clear filters</button>` : ""}
+      </div>`;
     return;
   }
   elements.postList.innerHTML = filtered.map(post => {
-    const tagsHtml = (post.tags || []).map(t => `<span class="tag">${t}</span>`).join("");
-    const dateStr = post.date.toISOString().slice(0, 10);
+    const dateStr = formatDate(post.date);
+    const firstTag = (post.tags || [])[0] || "";
+    const imageUrl = `./posts/${post.slug}/cover.jpg`;
+    const initial = post.title.charAt(0).toUpperCase();
     return `
-      <a class="card" href="#/post/${post.slug}">
-        <h3>${escapeHtml(post.title)}</h3>
-        <p>${escapeHtml(post.description || "")}</p>
-        <div class="meta">
-          <span>${dateStr}</span>
-          <div class="tags">${tagsHtml}</div>
+      <a class="card" href="#/post/${post.slug}" aria-label="Read ${escapeHtml(post.title)}">
+        <div class="card-image-wrapper">
+          <img src="${imageUrl}" alt="${escapeHtml(post.title)}" class="card-image" onerror="this.onerror=null; this.parentElement.classList.add('no-image');">
+          <div class="card-image-placeholder">${initial}</div>
+        </div>
+        <div class="card-content">
+          <div class="card-author">${initial}</div>
+          <div class="card-title-box">
+            <h3>${escapeHtml(post.title)}</h3>
+            ${post.description ? `<p>${escapeHtml(post.description)}</p>` : ''}
+          </div>
+          <div class="meta">
+            <time datetime="${post.date.toISOString()}">${dateStr.toUpperCase()}</time>
+            ${firstTag ? `<span>${escapeHtml(firstTag).toUpperCase()}</span>` : ''}
+          </div>
         </div>
       </a>`;
   }).join("");
 }
+
+// Global function for clearing filters
+window.clearFilters = function() {
+  state.searchQuery = "";
+  state.filteredTag = null;
+  if (elements.searchInput) elements.searchInput.value = "";
+  renderTags();
+  renderList();
+};
 
 function escapeHtml(s) {
   return s.replace(/[&<>\"]/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[ch]));
@@ -181,13 +235,21 @@ async function showPost(slug, anchorId) {
     elements.postView.classList.remove("view--hidden");
     return;
   }
-  const res = await fetch(`./posts/${post.slug}.md`);
-  const markdown = await res.text();
+  
+  // Show loading state
+  elements.postContent.innerHTML = '<div class="loading-indicator" style="display: flex;"><div class="loading-spinner"></div><p>Loading post...</p></div>';
+  elements.homeView.classList.add("view--hidden");
+  elements.postView.classList.remove("view--hidden");
+  
+  try {
+    const res = await fetch(`./posts/${post.slug}.md`);
+    if (!res.ok) throw new Error(`Failed to load post: ${res.statusText}`);
+    const markdown = await res.text();
 
   elements.postTitle.textContent = post.title;
-  elements.postDate.textContent = post.date.toISOString().slice(0, 10);
+  elements.postDate.textContent = formatDate(post.date);
   elements.postDate.setAttribute("datetime", post.date.toISOString());
-  elements.postTags.innerHTML = (post.tags || []).map(t => `<span class="tag">${t}</span>`).join("");
+  elements.postTags.innerHTML = (post.tags || []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("");
 
   // Render markdown safely
   const html = marked.parse(markdown, { mangle: false, headerIds: true });
@@ -208,14 +270,24 @@ async function showPost(slug, anchorId) {
   elements.homeView.classList.add("view--hidden");
   elements.postView.classList.remove("view--hidden");
 
-  // Scroll to anchor (if provided or present in hash)
-  const hashMatch = (typeof anchorId === 'string' && anchorId) ? [null, anchorId] : location.hash.match(/^#\/post\/[A-Za-z0-9-_]+#([A-Za-z0-9\-]+)/);
-  const targetId = (hashMatch && hashMatch[1]) ? hashMatch[1] : null;
-  if (targetId) {
-    const el = document.getElementById(targetId);
-    if (el && typeof el.scrollIntoView === 'function') {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Scroll to anchor (if provided or present in hash)
+    const hashMatch = (typeof anchorId === 'string' && anchorId) ? [null, anchorId] : location.hash.match(/^#\/post\/[A-Za-z0-9-_]+#([A-Za-z0-9\-]+)/);
+    const targetId = (hashMatch && hashMatch[1]) ? hashMatch[1] : null;
+    if (targetId) {
+      // Small delay to ensure content is rendered
+      setTimeout(() => {
+        const el = document.getElementById(targetId);
+        if (el && typeof el.scrollIntoView === 'function') {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    } else {
+      // Scroll to top of post
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+  } catch (error) {
+    console.error("Error loading post:", error);
+    elements.postContent.innerHTML = `<div class="empty-state"><div class="empty-icon">⚠️</div><h3>Error loading post</h3><p>${escapeHtml(error.message || "Failed to load post content.")}</p></div>`;
   }
 }
 
@@ -229,11 +301,32 @@ function onHashChange() {
   }
 }
 
+function handleScrollToTop() {
+  if (elements.scrollToTop) {
+    const showButton = window.scrollY > 300;
+    elements.scrollToTop.classList.toggle("visible", showButton);
+  }
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 function initEvents() {
   elements.searchInput.addEventListener("input", e => updateSearch(e.target.value));
   elements.searchInput.addEventListener("search", e => updateSearch(e.target.value));
   elements.searchInput.addEventListener("keydown", e => {
-    if (e.key === "Escape") { updateSearch(""); elements.searchInput.value = ""; }
+    if (e.key === "Escape") { 
+      updateSearch(""); 
+      elements.searchInput.value = "";
+      elements.searchInput.blur();
+    }
+    // Keyboard shortcut: Ctrl/Cmd + K to focus search
+    if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+      e.preventDefault();
+      elements.searchInput.focus();
+      elements.searchInput.select();
+    }
   });
 
   elements.randomBtn.addEventListener("click", () => {
@@ -241,11 +334,57 @@ function initEvents() {
     const idx = Math.floor(Math.random() * state.posts.length);
     location.hash = `#/post/${state.posts[idx].slug}`;
   });
-  document.querySelector(".back-link").addEventListener("click", (e) => {
-    e.preventDefault();
-    location.hash = "";
-  });
+  
+  const backLink = document.querySelector(".back-link");
+  if (backLink) {
+    backLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      location.hash = "";
+    });
+  }
+  
+  const homeLink = document.querySelector(".btn-primary[href='#']");
+  if (homeLink) {
+    homeLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      location.hash = "";
+      scrollToTop();
+    });
+  }
+  
+  const backToTopLink = document.querySelector(".back-to-top-link");
+  if (backToTopLink) {
+    backToTopLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      scrollToTop();
+    });
+  }
+
+  if (elements.scrollToTop) {
+    elements.scrollToTop.addEventListener("click", scrollToTop);
+  }
+
   window.addEventListener("hashchange", onHashChange);
+  window.addEventListener("scroll", handleScrollToTop);
+  handleScrollToTop(); // Initial check
+
+  // Keyboard shortcuts
+  document.addEventListener("keydown", (e) => {
+    // Don't trigger shortcuts when typing in inputs
+    if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+    
+    // Press '/' to focus search
+    if (e.key === "/" && !e.ctrlKey && !e.metaKey) {
+      e.preventDefault();
+      elements.searchInput.focus();
+    }
+    
+    // Press 'r' for random post
+    if (e.key === "r" && !e.ctrlKey && !e.metaKey) {
+      e.preventDefault();
+      elements.randomBtn.click();
+    }
+  });
 
   if (elements.themeToggle) {
     elements.themeToggle.addEventListener("click", toggleTheme);
