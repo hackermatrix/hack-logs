@@ -8,7 +8,6 @@ const state = {
   tags: new Set(),
   filteredTag: null,
   searchQuery: "",
-  theme: null,
 };
 
 const elements = {
@@ -23,38 +22,10 @@ const elements = {
   searchInput: document.getElementById("searchInput"),
   randomBtn: document.getElementById("randomBtn"),
   toc: document.getElementById("toc"),
-  themeToggle: document.getElementById("themeToggle"),
   loadingIndicator: document.getElementById("loadingIndicator"),
   scrollToTop: document.getElementById("scrollToTop"),
 };
 
-function getPreferredTheme() {
-  const saved = localStorage.getItem("nhl-theme");
-  if (saved === "light" || saved === "dark") return saved;
-  // Default to dark, but could check system preference
-  const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-  return prefersDark ? "dark" : "light";
-}
-
-function applyTheme(theme) {
-  state.theme = theme;
-  const root = document.documentElement;
-  if (theme === "light") {
-    root.setAttribute("data-theme", "light");
-  } else {
-    root.removeAttribute("data-theme");
-  }
-  localStorage.setItem("nhl-theme", theme);
-  if (elements.themeToggle) {
-    elements.themeToggle.setAttribute("aria-pressed", theme === "light" ? "true" : "false");
-    elements.themeToggle.textContent = theme === "light" ? "🌙" : "☀️";
-    elements.themeToggle.title = theme === "light" ? "Switch to Dark" : "Switch to Light";
-  }
-}
-
-function toggleTheme() {
-  applyTheme(state.theme === "light" ? "dark" : "light");
-}
 
 async function loadManifest() {
   if (elements.loadingIndicator) {
@@ -168,14 +139,13 @@ function renderList() {
           <div class="card-image-placeholder">${initial}</div>
         </div>
         <div class="card-content">
-          <div class="card-author">${initial}</div>
           <div class="card-title-box">
             <h3>${escapeHtml(post.title)}</h3>
             ${post.description ? `<p>${escapeHtml(post.description)}</p>` : ''}
           </div>
           <div class="meta">
-            <time datetime="${post.date.toISOString()}">${dateStr.toUpperCase()}</time>
-            ${firstTag ? `<span>${escapeHtml(firstTag).toUpperCase()}</span>` : ''}
+            <time datetime="${post.date.toISOString()}">${dateStr}</time>
+            ${firstTag ? `<span>${escapeHtml(firstTag)}</span>` : ''}
           </div>
         </div>
       </a>`;
@@ -386,15 +356,9 @@ function initEvents() {
     }
   });
 
-  if (elements.themeToggle) {
-    elements.themeToggle.addEventListener("click", toggleTheme);
-  }
 }
 
 async function main() {
-  // Theme first to avoid flash
-  applyTheme(getPreferredTheme());
-
   await loadManifest();
   renderTags();
   renderList();
