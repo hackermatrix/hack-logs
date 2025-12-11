@@ -13,6 +13,13 @@
       "description": "Hacking GraphQL API's - Bug Bounty",
       "date": "2025-11-24",
       "tags": ["graphql", "bugbounty"]
+    },
+    {
+      "slug": "blg2-11-12-2025-grc-start",
+      "title": "LOG - #2 : Understanding the Basics of Governance, Risk, and Compliance (GRC)",
+      "description": "Understanding the Basics of Governance, Risk, and Compliance (GRC)",
+      "date": "2025-12-11",
+      "tags": ["grc", "governance", "risk", "compliance"]
     }
 
   ]
