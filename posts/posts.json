@@ -1,28 +1,48 @@
 {
   "posts": [
     {
+      "slug": "blg3-17-12-2025-corporate-governance-deep-dive",
+      "title": "LOG - #3 : Corporate Governance Deep Dive",
+      "description": " Understanding corporate governance. This post breaks down the six key players in corporate governance (shareholders, boards, executives, auditors, regulators, and committees).",
+      "date": "2025-12-17",
+      "tags": [
+        "grc",
+        "governance",
+        "risk",
+        "compliance"
+      ]
+    },
+    {
       "slug": "welcome-to-neon-hack-logs",
       "title": "Welcome to Hrishikesh's Security Logs",
       "description": "Why this blog exists, what to expect, and how to navigate.",
       "date": "2025-10-17",
-      "tags": ["intro", "meta"]
+      "tags": [
+        "intro",
+        "meta"
+      ]
     },
     {
       "slug": "blg1-24-11-2025-graphql-bug-bounty",
       "title": "LOG - #1 : Hacking GraphQL API's - Bug Bounty",
       "description": "Hacking GraphQL API's - Bug Bounty",
       "date": "2025-11-24",
-      "tags": ["graphql", "bugbounty"]
+      "tags": [
+        "graphql",
+        "bugbounty"
+      ]
     },
     {
       "slug": "blg2-11-12-2025-grc-start",
       "title": "LOG - #2 : Understanding the Basics of Governance, Risk, and Compliance (GRC)",
       "description": "Understanding the Basics of Governance, Risk, and Compliance (GRC)",
       "date": "2025-12-11",
-      "tags": ["grc", "governance", "risk", "compliance"]
+      "tags": [
+        "grc",
+        "governance",
+        "risk",
+        "compliance"
+      ]
     }
-
   ]
 }
-
-

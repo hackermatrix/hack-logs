@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "Static markdown blog with neon cyberpunk theme",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "new-post": "node scripts/new-post.js"
   }
 }

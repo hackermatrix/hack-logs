@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "blg1-24-11-2025-graphql-bug-bounty.md",
+                "file": "blg3-17-12-2025-corporate-governance-deep-dive.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "blg1-24-11-2025-graphql-bug-bounty"
+              "title": "blg3-17-12-2025-corporate-governance-deep-dive"
             }
           }
         ]
@@ -185,12 +185,14 @@
   },
   "active": "a79aa23075bae3ea",
   "lastOpenFiles": [
+    "blg3-17-12-2025-corporate-governance-deep-dive/cover.jpg",
+    "blg3-17-12-2025-corporate-governance-deep-dive/Unconfirmed 172032.crdownload",
+    "blg1-24-11-2025-graphql-bug-bounty.md",
     "blg1-24-11-2025-graphql-bug-bounty/cover.jpg",
     "blg1-24-11-2025-graphql-bug-bounty/cover (1).jpeg",
     "blg1-24-11-2025-graphql-bug-bounty/cover.jpeg",
     "blg1-24-11-2025-graphql-bug-bounty",
     "f",
-    "welcome-to-neon-hack-logs.md",
-    "blg1-24-11-2025-graphql-bug-bounty.md"
+    "welcome-to-neon-hack-logs.md"
   ]
 }
