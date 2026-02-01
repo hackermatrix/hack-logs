@@ -1,18 +1,6 @@
 {
   "posts": [
     {
-      "slug": "blg4-01-02-2026-the-quantum-reckoning-post-quantum-cryptography-an",
-      "title": "The Quantum Reckoning: Post-Quantum Cryptography and the Asymmetric Threat",
-      "description": "An analysis of the impending threat quantum computing poses to current public-key infrastructure and the required transition to post-quantum cryptography (PQC) algorithms.",
-      "date": "2026-02-01",
-      "tags": [
-        "Cryptography",
-        "Quantum",
-        "PQC",
-        "Security"
-      ]
-    },
-    {
       "slug": "blg3-17-12-2025-corporate-governance-deep-dive",
       "title": "LOG - #3 : Corporate Governance Deep Dive",
       "description": " Understanding corporate governance. This post breaks down the six key players in corporate governance (shareholders, boards, executives, auditors, regulators, and committees).",
