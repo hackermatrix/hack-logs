@@ -1,6 +1,19 @@
 {
   "posts": [
     {
+      "slug": "blg6-01-02-2026-offensive-ai-techniques-and-defensive-countermeasu",
+      "title": "Offensive AI: Techniques and Defensive Countermeasures",
+      "description": "A technical deep dive into the use of generative AI for offensive operations, including prompt chaining, automated vulnerability scanning, and defense evasion, alongside practical defensive measures.",
+      "date": "2026-02-01",
+      "tags": [
+        "AI",
+        "OffensiveSecurity",
+        "CyberDefense",
+        "LLM",
+        "Hacking"
+      ]
+    },
+    {
       "slug": "blg5-01-02-2026-kerberos-the-technical-foundation-of-windows-authentication",
       "title": "Kerberos: The Technical Foundation of Windows Authentication",
       "description": "A technical breakdown of the Kerberos protocol, explaining the roles of the KDC, AS, TGS, and the process of Ticket-Granting Ticket (TGT) and Service Ticket (ST) exchange.",
