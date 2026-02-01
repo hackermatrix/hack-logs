@@ -6,5 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "new-post": "node scripts/new-post.js"
+  },
+  "dependencies": {
+    "yargs": "^18.0.0"
   }
 }
