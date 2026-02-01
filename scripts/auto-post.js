@@ -53,9 +53,10 @@ function generateSlug(title, blogNumber, date) {
 }
 
 function createMarkdownContent(title, content) {
-    // Use the provided content directly, or wrap it in a template if needed
-    // Assuming 'content' is the full markdown body provided by the agent.
-    return '# ' + title + '\\n\\n' + content;
+    // The content argument is expected to be the full markdown body.
+    // We trust that the caller has included the necessary H1 (or H2)
+    // for the post's main title within the 'content' string itself.
+    return content;
 }
 
 function main() {
