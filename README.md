@@ -69,3 +69,4 @@ This is static — host the folder anywhere (GitHub Pages, Netlify, Vercel, S3, 
 ## License
 
 MIT
+\n\n### Fix Log\n- Backtick escaping fixed in Kerberos post (2026-02-01)
