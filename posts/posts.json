@@ -1,55 +1,6 @@
 {
   "posts": [
     {
-      "slug": "blg7-01-02-2026-the-attackers-playbook-deconstructing-the-saas-sec",
-      "title": "The Attacker's Playbook: Deconstructing the SaaS Security Model",
-      "description": "This analysis outlines the primary vectors and common misconfigurations exploited in a typical SaaS breach lifecycle, focusing on identity, configuration, and API exploitation.",
-      "date": "2026-02-01",
-      "tags": [
-        "SaaS",
-        "Security",
-        "Cloud",
-        "ThreatModel"
-      ]
-    },
-    {
-      "slug": "blg6-01-02-2026-offensive-ai-techniques-and-defensive-countermeasu",
-      "title": "Offensive AI: Techniques and Defensive Countermeasures",
-      "description": "A technical deep dive into the use of generative AI for offensive operations, including prompt chaining, automated vulnerability scanning, and defense evasion, alongside practical defensive measures.",
-      "date": "2026-02-01",
-      "tags": [
-        "AI",
-        "OffensiveSecurity",
-        "CyberDefense",
-        "LLM",
-        "Hacking"
-      ]
-    },
-    {
-      "slug": "blg5-01-02-2026-kerberos-the-technical-foundation-of-windows-authentication",
-      "title": "Kerberos: The Technical Foundation of Windows Authentication",
-      "description": "A technical breakdown of the Kerberos protocol, explaining the roles of the KDC, AS, TGS, and the process of Ticket-Granting Ticket (TGT) and Service Ticket (ST) exchange.",
-      "date": "2026-02-01",
-      "tags": [
-        "Kerberos",
-        "Authentication",
-        "Security",
-        "Windows"
-      ]
-    },
-    {
-      "slug": "blg4-01-02-2026-the-invisible-override-understanding-and-defending-against-prompt-in",
-      "title": "The Invisible Override: Understanding and Defending Against Prompt Injection",
-      "description": "A technical breakdown of prompt injection attacks against LLMs, analyzing the risks and outlining mitigation strategies for developers deploying LLM-integrated applications.",
-      "date": "2026-02-01",
-      "tags": [
-        "AI",
-        "Cybersecurity",
-        "LLM",
-        "PromptInjection"
-      ]
-    },
-    {
       "slug": "blg3-17-12-2025-corporate-governance-deep-dive",
       "title": "LOG - #3 : Corporate Governance Deep Dive",
       "description": " Understanding corporate governance. This post breaks down the six key players in corporate governance (shareholders, boards, executives, auditors, regulators, and committees).",
