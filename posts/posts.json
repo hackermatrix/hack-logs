@@ -1,6 +1,18 @@
 {
   "posts": [
     {
+      "slug": "blg4-01-02-2026-the-blast-radius-limiting-over-privileged-service-",
+      "title": "The Blast Radius: Limiting Over-Privileged Service Accounts in AWS",
+      "description": "A deep dive into the risks associated with excessive permissions granted to automated service accounts (IAM Roles) in Amazon Web Services.",
+      "date": "2026-02-01",
+      "tags": [
+        "CloudSecurity",
+        "AWS",
+        "IAM",
+        "ZeroTrust"
+      ]
+    },
+    {
       "slug": "blg3-17-12-2025-corporate-governance-deep-dive",
       "title": "LOG - #3 : Corporate Governance Deep Dive",
       "description": " Understanding corporate governance. This post breaks down the six key players in corporate governance (shareholders, boards, executives, auditors, regulators, and committees).",
