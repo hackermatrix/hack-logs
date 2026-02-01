@@ -1,6 +1,18 @@
 {
   "posts": [
     {
+      "slug": "blg7-01-02-2026-the-attackers-playbook-deconstructing-the-saas-sec",
+      "title": "The Attacker's Playbook: Deconstructing the SaaS Security Model",
+      "description": "This analysis outlines the primary vectors and common misconfigurations exploited in a typical SaaS breach lifecycle, focusing on identity, configuration, and API exploitation.",
+      "date": "2026-02-01",
+      "tags": [
+        "SaaS",
+        "Security",
+        "Cloud",
+        "ThreatModel"
+      ]
+    },
+    {
       "slug": "blg6-01-02-2026-offensive-ai-techniques-and-defensive-countermeasu",
       "title": "Offensive AI: Techniques and Defensive Countermeasures",
       "description": "A technical deep dive into the use of generative AI for offensive operations, including prompt chaining, automated vulnerability scanning, and defense evasion, alongside practical defensive measures.",
