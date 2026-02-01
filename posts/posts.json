@@ -1,19 +1,6 @@
 {
   "posts": [
     {
-      "slug": "blg5-01-02-2026-the-persistence-of-poison-analyzing-llmnrnbt-ns-at",
-      "title": "The Persistence of Poison: Analyzing LLMNR/NBT-NS Attacks in Modern Networks",
-      "description": "A technical analysis of Link-Local Multicast Name Resolution (LLMNR) and NetBIOS Name Service (NBT-NS) poisoning, detailing the attack vector, its persistence in contemporary environments, and defensive strategies.",
-      "date": "2026-02-01",
-      "tags": [
-        "LLMNR",
-        "NBT-NS",
-        "MitM",
-        "Network Security",
-        "Penetration Testing"
-      ]
-    },
-    {
       "slug": "blg4-01-02-2026-kerberos-authentication-from-tgt-to-service-ticket",
       "title": "Kerberos Authentication: From TGT to Service Ticket - A Protocol Analysis",
       "description": "A deep dive into the Kerberos authentication protocol, analyzing the multi-step process from initial Ticket Granting Ticket (TGT) request to the final acquisition and use of a Service Ticket (ST).",
