@@ -9,6 +9,7 @@
 const fs = require('fs');
 const path = require('path');
 const yargs = require('yargs');
+const { execSync } = require('child_process');
 
 const POSTS_DIR = path.join(__dirname, '..', 'posts');
 const POSTS_JSON = path.join(POSTS_DIR, 'posts.json');
@@ -121,11 +122,25 @@ function main() {
     console.warn(`⚠️ Directory already exists: ${postDir}`);
   }
 
-  // 4. Create Markdown File
+  // 4. Create Markdown File (Using the markdown-file-creator skill)
   const markdownFile = path.join(POSTS_DIR, `${slug}.md`);
   const markdownContent = createMarkdownContent(title, rawContent);
-  fs.writeFileSync(markdownFile, markdownContent, 'utf8');
-  console.log(`✅ Created markdown file: ${markdownFile}`);
+  
+  // Construct the command to call the external Python script
+  const createScriptPath = '/home/hckjdk/.openclaw/workspace/skills/markdown-file-creator/scripts/create.py';
+  
+  // NOTE: We must ensure content is escaped for the shell command before execution
+  const shellCommand = \`python3 \${createScriptPath} --path "\${markdownFile}" --content "\${markdownContent.replace(/"/g, '\\\\"')}"\`;
+
+  try {
+    // Execute the Python script synchronously
+    const output = execSync(shellCommand, { encoding: 'utf8', maxBuffer: 1024 * 1024 });
+    console.log(output.trim());
+    console.log(\`✅ Created markdown file via markdown-file-creator: \${markdownFile}\`);
+  } catch (error) {
+    console.error(\`❌ Failed to create file via external script: \${error.stderr}\`);
+    process.exit(1);
+  }
 
   // 5. Placeholder for Cover Image (Agent will place the image here)
   const coverPath = path.join(postDir, 'cover.jpg');
