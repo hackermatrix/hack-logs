@@ -1,6 +1,18 @@
 {
   "posts": [
     {
+      "slug": "blg5-01-02-2026-kerberos-the-technical-foundation-of-windows-authentication",
+      "title": "Kerberos: The Technical Foundation of Windows Authentication",
+      "description": "A technical breakdown of the Kerberos protocol, explaining the roles of the KDC, AS, TGS, and the process of Ticket-Granting Ticket (TGT) and Service Ticket (ST) exchange.",
+      "date": "2026-02-01",
+      "tags": [
+        "Kerberos",
+        "Authentication",
+        "Security",
+        "Windows"
+      ]
+    },
+    {
       "slug": "blg4-01-02-2026-the-invisible-override-understanding-and-defending-against-prompt-in",
       "title": "The Invisible Override: Understanding and Defending Against Prompt Injection",
       "description": "A technical breakdown of prompt injection attacks against LLMs, analyzing the risks and outlining mitigation strategies for developers deploying LLM-integrated applications.",
