@@ -20,47 +20,47 @@ The first critical step occurs when a user authenticates against the domain, kno
 
 1.  **KRB_AS_REQ (Authentication Service Request):**
     The client sends a request to the KDC's AS, stating its identity (username/UPN) and requesting a TGT. Crucially, the client does not send the password itself. Instead, it sends a pre-authentication block containing a timestamp, which is encrypted with a key derived from the user’s password hash (NT hash).
-    \`\`\`bash
+    ```bash
     Client -> KDC (AS): 
         - Requesting User Identity
         - Encrypted Timestamp (using User's NT Hash)
-    \`\`\`
+    ```
 
 2.  **KRB_AS_REP (Authentication Service Response):**
     The KDC receives the request. It retrieves the user's password hash from the NTDS.DIT and attempts to decrypt the timestamp. If decryption is successful, the client is verified as the legitimate owner of that hash. The KDC then generates a unique **TGT Session Key** specifically for the client to use in subsequent TGS requests.
 
     The KDC returns a response containing two primary encrypted components:
 
-    *   **The Ticket-Granting Ticket (TGT):** This ticket contains the client's identity, the TGT Session Key, an expiration time, and authorization data. It is encrypted entirely using the KDC’s secret key (the \`krbtgt\` account hash). Because only the KDC knows this key, the TGT is considered tamper-proof proof of identity.
+    *   **The Ticket-Granting Ticket (TGT):** This ticket contains the client's identity, the TGT Session Key, an expiration time, and authorization data. It is encrypted entirely using the KDC’s secret key (the `krbtgt` account hash). Because only the KDC knows this key, the TGT is considered tamper-proof proof of identity.
 
     *   **The Encrypted TGT Session Key:** This key (which is also inside the TGT) is encrypted using the client's password hash, allowing only the legitimate client to decrypt and retrieve it.
 
-    \`\`\`bash
+    ```bash
     KDC (AS) -> Client:
         - TGT [Encrypted with krbtgt Hash]
         - TGT Session Key [Encrypted with User's NT Hash]
-    \`\`\`
+    ```
 The TGT is the **proof of logon**. The client now possesses the TGT and the TGT Session Key, enabling subsequent SSO requests without re-entering credentials.
 
 ## Phase 2: Requesting the Service Ticket (TGS Exchange)
 
-Once the client needs to access a specific resource (e.g., a file share on \`ServiceA\`), the second phase, the **Ticket-Granting Service (TGS) Exchange**, is initiated. The TGS uses the client's TGT to validate their authorization and issue a service-specific ticket.
+Once the client needs to access a specific resource (e.g., a file share on `ServiceA`), the second phase, the **Ticket-Granting Service (TGS) Exchange**, is initiated. The TGS uses the client's TGT to validate their authorization and issue a service-specific ticket.
 
 1.  **KRB_TGS_REQ (Ticket-Granting Service Request):**
     The client sends three primary components to the KDC's TGS:
     *   The raw TGT (obtained in Phase 1).
-    *   The desired Service Principal Name (SPN) for the resource (e.g., \`cifs/serviceA.corp.local\`).
+    *   The desired Service Principal Name (SPN) for the resource (e.g., `cifs/serviceA.corp.local`).
     *   An **Authenticator**, which is a timestamp encrypted with the TGT Session Key. The purpose of this Authenticator is to prove the client is the legitimate holder of the Session Key found inside the TGT.
 
-    \`\`\`bash
+    ```bash
     Client -> KDC (TGS): 
         - TGT
         - SPN of Target Service
         - Authenticator [Encrypted with TGT Session Key]
-    \`\`\`
+    ```
 
 2.  **TGS Validation and Ticket Creation:**
-    The TGS receives the request. It first decrypts the TGT using its own \`krbtgt\` secret key. This reveals the TGT Session Key. The TGS then uses the TGT Session Key to decrypt the client's Authenticator. If the TGT is valid, the timestamps are fresh, and the client is authorized, the request proceeds.
+    The TGS receives the request. It first decrypts the TGT using its own `krbtgt` secret key. This reveals the TGT Session Key. The TGS then uses the TGT Session Key to decrypt the client's Authenticator. If the TGT is valid, the timestamps are fresh, and the client is authorized, the request proceeds.
 
     The TGS generates a new, service-specific **Client/Server Session Key**.
 
@@ -71,11 +71,11 @@ Once the client needs to access a specific resource (e.g., a file share on \`Ser
 
     *   **The Encrypted Client/Server Session Key:** This key is encrypted using the TGT Session Key, allowing the client to decrypt it and learn the session key it shares with the target server.
 
-    \`\`\`bash
+    ```bash
     KDC (TGS) -> Client:
         - Service Ticket [Encrypted with Service's NT Hash]
         - Client/Server Session Key [Encrypted with TGT Session Key]
-    \`\`\`
+    ```
 The client now possesses the Service Ticket (encrypted for the service) and the shared Client/Server Session Key.
 
 ## Phase 3: Accessing the Service (Client/Server Exchange)
@@ -83,13 +83,13 @@ The client now possesses the Service Ticket (encrypted for the service) and the 
 With the Service Ticket, the client can finally authenticate to the target resource without further KDC involvement. This is the **Client/Server Exchange**.
 
 1.  **KRB_AP_REQ (Application Request):**
-    The client sends the Service Ticket (ST) and a new Authenticator to the target ServiceA. This Authenticator is encrypted using the Client/Server Session Key obtained in Phase 2. This proves to the service that the client possesses the key known to the KDC and written into the ST.
+    The client sends the Service Ticket (ST) and a new Authenticator to the target `ServiceA`. This Authenticator is encrypted using the Client/Server Session Key obtained in Phase 2. This proves to the service that the client possesses the key known to the KDC and written into the ST.
 
 2.  **Service Validation and Access:**
-    ServiceA receives the request. It uses its own password hash (the key shared with the KDC) to decrypt the Service Ticket. This reveals the Client/Server Session Key. ServiceA then uses this key to decrypt the client's Authenticator. If validation passes, the client is granted access.
+    `ServiceA` receives the request. It uses its own password hash (the key shared with the KDC) to decrypt the Service Ticket. This reveals the Client/Server Session Key. `ServiceA` then uses this key to decrypt the client's Authenticator. If validation passes, the client is granted access.
 
 3.  **Mutual Authentication (Optional):**
-    The service may optionally respond with a \`KRB_AP_REP\`, which contains the client's Authenticator timestamp, encrypted with the same Client/Server Session Key. This final step proves to the client that the server is also legitimate, completing the cryptographic handshakes.
+    The service may optionally respond with a `KRB_AP_REP`, which contains the client's Authenticator timestamp, encrypted with the same Client/Server Session Key. This final step proves to the client that the server is also legitimate, completing the cryptographic handshakes.
 
 All subsequent communication within the authorized session can be protected and validated using the shared Client/Server Session Key, ensuring ongoing integrity and confidentiality.
 
@@ -101,7 +101,7 @@ The Kerberos protocol, while robust, introduces specific security challenges roo
 
 *   **Pass-the-Ticket (PtT):** While the password is not transmitted, the cryptographic tickets can be stolen from memory. If an attacker dumps a user's memory (e.g., from LSA on Windows), they can retrieve the TGT or ST and reuse it to authenticate as the victim, often without needing the password hash itself.
 
-*   **Golden Tickets:** This is a devastating post-exploitation technique where an attacker gains control of the KDC's \`krbtgt\` hash. With this hash, they can forge a valid TGT for any user, with any arbitrary group membership and unlimited lifetime. Since the KDC validates the TGT using only the \`krbtgt\` hash, a forged Golden Ticket grants permanent, undetectable, domain-wide access, bypassing standard password policies.
+*   **Golden Tickets:** This is a devastating post-exploitation technique where an attacker gains control of the KDC's `krbtgt` hash. With this hash, they can forge a valid TGT for any user, with any arbitrary group membership and unlimited lifetime. Since the KDC validates the TGT using only the `krbtgt` hash, a forged Golden Ticket grants permanent, undetectable, domain-wide access, bypassing standard password policies.
 
 *   **Decentralization of Trust:** The entire system relies on the KDC's integrity. Compromising the KDC (the Domain Controller) provides the keys to the entire domain, underscoring the necessity of strict security controls and least-privilege principles on Domain Controllers.
 
