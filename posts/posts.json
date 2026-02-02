@@ -1,6 +1,19 @@
 {
   "posts": [
     {
+      "slug": "blg5-02-02-2026-llmnr-poisoning-the-takedown-of-unpatched-internal",
+      "title": "LLMNR Poisoning: The Takedown of Unpatched Internal Networks",
+      "description": "A technical guide to Local Link Multicast Name Resolution (LLMNR) and NetBIOS Name Service (NBT-NS) poisoning, detailing attack vectors, mitigation steps, and how to track the vulnerability.",
+      "date": "2026-02-02",
+      "tags": [
+        "LLMNR",
+        "NBT-NS",
+        "NetworkSecurity",
+        "Pentest",
+        "MitM"
+      ]
+    },
+    {
       "slug": "blg4-02-02-2026-kerberos-authentication-a-protocol-deep-dive-from-",
       "title": "Kerberos Authentication: A Protocol Deep Dive from TGT to Service Ticket",
       "description": "A deep dive into the Kerberos authentication protocol, analyzing the multi-step process from initial TGT request to the final acquisition and use of a Service Ticket (ST).",
