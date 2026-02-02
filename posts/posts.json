@@ -1,6 +1,20 @@
 {
   "posts": [
     {
+      "slug": "blg4-02-02-2026-kerberos-authentication-a-protocol-deep-dive-from-",
+      "title": "Kerberos Authentication: A Protocol Deep Dive from TGT to Service Ticket",
+      "description": "A deep dive into the Kerberos authentication protocol, analyzing the multi-step process from initial TGT request to the final acquisition and use of a Service Ticket (ST).",
+      "date": "2026-02-02",
+      "tags": [
+        "Kerberos",
+        "Authentication",
+        "Security",
+        "ActiveDirectory",
+        "Windows",
+        "TGT"
+      ]
+    },
+    {
       "slug": "llmnr-nbtns-poisoning",
       "title": "The Silent Snare: Deconstructing LLMNR and NBT-NS Poisoning",
       "description": "An analysis of LLMNR and NBT-NS poisoning attacks, detailing how they function, their impact on corporate networks, and the most effective defensive countermeasures.",
