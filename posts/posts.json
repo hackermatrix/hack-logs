@@ -1,6 +1,19 @@
 {
   "posts": [
     {
+      "slug": "blg6-02-02-2026-smb-signing-disabled-a-critical-network-vulnerabil",
+      "title": "SMB Signing Disabled: A Critical Network Vulnerability and Mitigation Guide",
+      "description": "A technical deep-dive into the SMB signing vulnerability, explaining how attackers exploit it for relay attacks and providing prescriptive steps for securing your network via Group Policy.",
+      "date": "2026-02-02",
+      "tags": [
+        "SMB",
+        "Security",
+        "Windows",
+        "Pentest",
+        "Mitigation"
+      ]
+    },
+    {
       "slug": "blg5-02-02-2026-llmnr-poisoning-the-takedown-of-unpatched-internal",
       "title": "LLMNR Poisoning: The Takedown of Unpatched Internal Networks",
       "description": "A technical guide to Local Link Multicast Name Resolution (LLMNR) and NetBIOS Name Service (NBT-NS) poisoning, detailing attack vectors, mitigation steps, and how to track the vulnerability.",
