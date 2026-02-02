@@ -141,7 +141,7 @@ a:hover {
   border-radius: 20px;
   outline: none;
   padding: 10px 16px;
-  min-width: 240px;
+  min-width: 0; /* Changed from 240px to 0 for better fluid responsiveness */
   font-size: 14px;
   transition: all 200ms ease;
   font-family: "Inter", sans-serif;
