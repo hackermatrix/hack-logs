@@ -1,6 +1,20 @@
 {
   "posts": [
     {
+      "slug": "blg4-02-02-2026-kerberos-authentication-a-protocol-deep-dive-from-",
+      "title": "Kerberos Authentication: A Protocol Deep Dive from TGT to Service Ticket",
+      "description": "A deep dive into the Kerberos authentication protocol, analyzing the multi-step process from initial TGT request to the final acquisition and use of a Service Ticket (ST).",
+      "date": "2026-02-02",
+      "tags": [
+        "Kerberos",
+        "Authentication",
+        "Security",
+        "ActiveDirectory",
+        "Windows",
+        "TGT"
+      ]
+    },
+    {
       "slug": "blg3-17-12-2025-corporate-governance-deep-dive",
       "title": "LOG - #3 : Corporate Governance Deep Dive",
       "description": " Understanding corporate governance. This post breaks down the six key players in corporate governance (shareholders, boards, executives, auditors, regulators, and committees).",
