@@ -2,7 +2,7 @@
 
 /**
  * Blog Post Initialization Script (CLI Version)
- * Updates posts.json based on command-line arguments.
+ * Creates a new blog post boilerplate, directory, and updates posts.json based on command-line arguments.
  * Usage: node new-post-cli.js --title="Blog Title" --date="YYYY-MM-DD" --tags="tag1,tag2" --description="Post Description"
  */
 
@@ -68,6 +68,16 @@ function generateSlug(title, blogNumber, date) {
   return `blg${blogNumber}-${dateSlug}-${titleSlug}`;
 }
 
+function createMarkdownTemplate(title) {
+  return `# ${title}
+
+## Introduction
+
+[Content will be moved here]
+
+`;
+}
+
 // --- Main Execution ---
 
 function main() {
@@ -104,8 +114,28 @@ function main() {
     if (!fs.existsSync(POSTS_DIR)) {
       fs.mkdirSync(POSTS_DIR, { recursive: true });
     }
+    
+    // 4. Create directory and boilerplate files
+    const postDir = path.join(POSTS_DIR, slug);
+    if (fs.existsSync(postDir)) {
+      console.warn(`⚠️ Post directory ${slug} already exists. Skipping directory/file creation.`);
+    } else {
+      fs.mkdirSync(postDir, { recursive: true });
+      console.log(`✅ Created directory: ${postDir}`);
 
-    // 4. Update posts.json
+      // Create markdown template (index.md)
+      const markdownContent = createMarkdownTemplate(title);
+      const markdownFile = path.join(postDir, `index.md`);
+      fs.writeFileSync(markdownFile, markdownContent, 'utf8');
+      console.log(`✅ Created markdown template: ${markdownFile}`);
+
+      // Create placeholder cover.jpg
+      const coverPath = path.join(postDir, 'cover.jpg');
+      fs.writeFileSync(coverPath, '', 'utf8'); // Creating an empty file as a placeholder
+      console.log(`📸 Created image placeholder: ${coverPath}`);
+    }
+
+    // 5. Update posts.json
     let postsData = { posts: [] };
     if (fs.existsSync(POSTS_JSON)) {
       postsData = JSON.parse(fs.readFileSync(POSTS_JSON, 'utf8'));
@@ -135,7 +165,7 @@ function main() {
       'utf8'
     );
     console.log(`✅ Updated posts.json with new post: ${slug}`);
-    console.log(`Next step: Move content and cover image to a directory named: ${slug}`);
+    console.log(`✨ Post setup complete. Ready to move generated content into: ${postDir}`);
 
   } catch (error) {
     console.error('\n❌ Error:', error.message);
