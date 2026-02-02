@@ -3,6 +3,11 @@
 /**
  * Blog Post Initialization Script (CLI Version)
  * Creates a new blog post boilerplate, directory, and updates posts.json based on command-line arguments.
+ *
+ * CORRECT FORMAT:
+ * - Content File: /posts/<slug>.md
+ * - Asset Folder: /posts/<slug>/cover.jpg
+ *
  * Usage: node new-post-cli.js --title="Blog Title" --date="YYYY-MM-DD" --tags="tag1,tag2" --description="Post Description"
  */
 
@@ -117,23 +122,30 @@ function main() {
     
     // 4. Create directory and boilerplate files
     const postDir = path.join(POSTS_DIR, slug);
+    const markdownFile = path.join(POSTS_DIR, `${slug}.md`); // CORRECT: slug.md in root
+
+    // --- Asset Folder Creation ---
     if (fs.existsSync(postDir)) {
-      console.warn(`⚠️ Post directory ${slug} already exists. Skipping directory/file creation.`);
+      console.warn(`⚠️ Asset directory ${slug} already exists. Skipping directory/file creation.`);
     } else {
       fs.mkdirSync(postDir, { recursive: true });
-      console.log(`✅ Created directory: ${postDir}`);
-
-      // Create markdown template (index.md)
-      const markdownContent = createMarkdownTemplate(title);
-      const markdownFile = path.join(postDir, `index.md`);
-      fs.writeFileSync(markdownFile, markdownContent, 'utf8');
-      console.log(`✅ Created markdown template: ${markdownFile}`);
+      console.log(`✅ Created asset directory: ${postDir}`);
 
       // Create placeholder cover.jpg
       const coverPath = path.join(postDir, 'cover.jpg');
       fs.writeFileSync(coverPath, '', 'utf8'); // Creating an empty file as a placeholder
       console.log(`📸 Created image placeholder: ${coverPath}`);
     }
+    
+    // --- Content File Creation (in posts root) ---
+    if (!fs.existsSync(markdownFile)) {
+      const markdownContent = createMarkdownTemplate(title);
+      fs.writeFileSync(markdownFile, markdownContent, 'utf8');
+      console.log(`✅ Created content file: ${markdownFile}`);
+    } else {
+      console.warn(`⚠️ Content file ${slug}.md already exists. Skipping content file creation.`);
+    }
+
 
     // 5. Update posts.json
     let postsData = { posts: [] };
@@ -165,7 +177,7 @@ function main() {
       'utf8'
     );
     console.log(`✅ Updated posts.json with new post: ${slug}`);
-    console.log(`✨ Post setup complete. Ready to move generated content into: ${postDir}`);
+    console.log(`✨ Post setup complete. Ready to move generated content into: ${markdownFile} and ${postDir}`);
 
   } catch (error) {
     console.error('\n❌ Error:', error.message);
