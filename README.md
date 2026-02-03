@@ -1,5 +1,6 @@
 # Hrishikesh’s Security Logs
 
+
 A static, markdown-powered blog for cybersecurity and CTF writeups. Neon cyberpunk theme, search, tags, and code highlighting.
 
 ## Features
